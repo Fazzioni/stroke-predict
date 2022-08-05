@@ -18,11 +18,13 @@
     async function Start(){
         // carregar o modelo salvo
         model_heart = await tf.loadLayersModel('/model/model.json');
-
+ 
         // habilitar o botao, apos carregar
-        test_tensor = tf.tensor2d([[1,0.3,0.4,0.3,0.1]]);
+        //test_tensor = tf.tensor2d([[1,0.3,0.4,0.3,0.1]]);
 
-        console.log(model_heart.predict(test_tensor).print());
+        test_tensor = tf.tensor2d([[1,0.49,0,0,0,0,0.474408,0.344, 1, 0, 0,0]]);
+
+        console.log(  model_heart.predict(test_tensor).print()  );
     }
     Start()
 
@@ -56,36 +58,50 @@
           <!-- Formulário de predição-->
           <div class="form">
                 <h1>...</h1>
-                
-         
+
+                <!-- Genero -->
+                <h2>Qual seu gênero?</h2>
+                <input class="red" type="radio" name="radio_geneo" id="radio_geneo_w" value="w"  >
+                <label for="radio_geneo_w">Mulher</label>
+                <input class="red" type="radio" name="radio_geneo" id="radio_geneo_m" value="m"  >
+                <label for="radio_geneo_m">Homem</label>
+
 
                 <!-- age -->
-                <h2>Qual sua idade</h2>
+                <h2>Quantos anos, xuxu?</h2>
                 <input type="number" name="age" min="18" id="age"> 
 
                 <!-- Qual sua altura? -->
-                <h2>Quantos anos, xuxu?</h2>
+                <h2>Qual sua altura em metros?</h2>
                 <input type="number" name="altura" min="0.5" id="altura"> 
             
-                <!-- altura? -->
+                <!-- peso? -->
                 <h2>Quantos kg pesa esse corpinho?</h2>
-                <input type="number" name="altura" min="0.5" id="altura"> 
+                <input type="number" name="peso" min="0.5" id="peso"> 
                 
                 <!-- Hipertensao? -->
                 <h2>Tem hipertensão?</h2>
-                <input class="red" type="radio" name="hipertenso" id="hipertenso_s" value="s"  ">
+                <input class="red" type="radio" name="hipertenso" id="hipertenso_s" value="s"  >
                 <label for="hipertenso_s">Sim</label>
 
-                <input class="green" type="radio" name="hipertenso" id="hipertenso_n" value="n"  ">
+                <input class="green" type="radio" name="hipertenso" id="hipertenso_n" value="n"  >
                 <label  for="hipertenso_n" >Não!</label>
                 
                 <!-- heart disease? -->
-                <h2>Tem doença cardíaca?</h2>
-                <input class="red" type="radio" name="heart_disease" id="heart_disease_s" value="s"  ">
+                <h2>E esse coração? Tem doença cardíaca?</h2>
+                <input class="red" type="radio" name="heart_disease" id="heart_disease_s" value="s"  >
                 <label for="heart_disease_s">Sim</label>
-                <input class="green" type="radio" name="heart_disease" id="heart_disease_n" value="n"  ">
+                <input class="green" type="radio" name="heart_disease" id="heart_disease_n" value="n" >
                 <label  for="heart_disease_n" >Não!</label>
                 
+
+                <!-- Casamento -->
+                <h2>já foi casado?</h2>
+                <input class="red" type="radio" name="casado" id="casado_s" value="s"  >
+                <label for="casado_s">Sim</label>
+
+                <input class="green" type="radio" name="casado" id="casado_n" value="n"  >
+                <label  for="casado_n" >Não!</label>
 
                 <!-- tipo de trabalho -->
                 <h2>Em qual grupo seu trabalho mais se encaixa?</h2>
@@ -100,80 +116,18 @@
                 
                 <!-- residencia -->
                 <h2>Em que região você mora?</h2>
-                <input class="green" type="radio" name="" id="_s" value="s"  ">
-                <label for="_s">Urbana</label>
-                <input class="green" type="radio" name="" id="_n" value="n"  ">
-                <label  for="_n" >Rural</label>
-                
-
-                <!---->
-                <h2>Você sente desconforto no peito?</h2>
-                <input class="red" type="radio" name="hipertenso" id="exercise_angina_s" value="s" onclick="ChangePainVisibility(true)">
-                <label for="exercise_angina_s">Sim</label>
-
-                <input class="green" type="radio" name="exercise_angina" id="exercise_angina_n" value="n" onclick="ChangePainVisibility(false)">
-                <label  for="exercise_angina_n" >Não, meu coração é bom!!</label>
-                
-
-                <!-- Sente dor / desconforto-->
-                <div id="div_pain">
-                  <!---->
-                  <h2>O desconforto tem características e durações típicas?</h2>
-                  
-                  <input class="red" type="radio" name="dor_duracao_tipica" id="dor_duracao_tipica_s" value="s">
-                  <label for="dor_duracao_tipica_s">Sim</label>
-                  <input class="green" type="radio" name="dor_duracao_tipica" id="dor_duracao_tipica_n" value="n">
-                  <label  for="dor_duracao_tipica_n" >Não</label>
-                  
-                  <!-- -->
-                  <h2>Tem como fator stress ou questões emocionais?</h2>
-                  <input class="red" type="radio" name="dor_stress" id="dor_stress_s" value="s">
-                  <label for="dor_stress_s">Sim</label>
-                  <input class="green" type="radio" name="dor_stress" id="dor_stress_n" value="n">
-                  <label  for="dor_stress_n" >Não</label>
-                  
-                  <!-- -->
-                  <h2>Alivia em repouso ou com remédios?</h2>
-                  <input class="green" type="radio" name="dor_alivio" id="dor_alivio_s" value="s">
-                  <label for="dor_alivio_s">Sim</label>
-                  <input class="red" type="radio" name="dor_alivio" id="dor_alivio_n" value="n">
-                  <label  for="dor_alivio_n" >Não</label>
-                  
-                  <!-- -->
-                  <h2>Aparece ao fazer exercícios físicos?</h2>
-                  <input class="red" type="radio" name="dor_exercicio" id="dor_exercicio_s" value="s">
-                  <label for="dor_exercicio_s">Sim</label>
-                  <input class="green" type="radio" name="dor_exercicio" id="dor_exercicio_n" value="n">
-                  <label  for="dor_exercicio_n" >Não</label>
-                  
-                  
-                </div>
-
-                
-
-
-                <!-- st_slope -->
-                <h2>st_slope</h2>
-                <input class="laranja" type="radio" name="st_slope" id="st_slope_1" value="1">
-                <label for="st_slope_1"><img class="img_input" src="up.jpg"></label>
-
-                <input class="laranja" type="radio" name="st_slope" id="st_slope_2" value="2">
-                <label  for="st_slope_2" ><img class="img_input" src="horizontal.jpg"></label>
-
-                <input class="laranja" type="radio" name="st_slope" id="st_slope_3" value="3">
-                <label  for="st_slope_3"><img class="img_input" src="down.jpg"></label>
-                
+                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_s" value="Urbana"  ">
+                <label for="regiao_radio_s">Urbana</label>
+                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_n" value="Rural"  ">
+                <label  for="regiao_radio_n" >Rural</label>
+              
+              
                 só diabetes, docinho
-                
-
-                <!-- oldpeak -->
-                <h2>OldPeak</h2>
-        
+                <br><br><br>
                 <label id="trackbar_value" class="label_tracker">.</label>
                  
-
                 <div class="trackbarcontainer">
-                  <input type="range" min="-26" max="62" value="10" class="trackbar" id="Trackbar">
+                  <input type="range" min="55" max="300" value="10" class="trackbar" id="Trackbar">
                 </div>
  
                 <br><br><br>
@@ -246,58 +200,36 @@
   function getId(id){ return document.getElementById(id)}
   
   function predition(){
-    age = getId('age').value;
-    
-    dor_peito = getId("exercise_angina_s").checked;
-    dor_duracao= getId("dor_duracao_tipica_s").checked;
-    dor_stree = getId("dor_stress_s").checked;
-    dor_alivia = getId("dor_alivio_s").checked;
-    dor_exercise = getId("dor_exercicio_s").checked;
-    
-    dor_slope = 0;
-    for (i = 1; i <=3; i++)
-      if (getId("st_slope_"+i).checked)
-        dor_slope = i;
+    age = getId('age').value / 100;
+    woman =  getId("radio_geneo_w").checked;
+    casado = !getId("casado_s").checked;
 
-    old_peak = getId("Trackbar").value / 10;
-
+    altura = getId('altura').value;
+    peso = getId('peso').value;
+    imc = peso / (altura * altura)
+    imc = imc / 100
+    hipertensao = getId("hipertenso_s").checked
+    doenca_cardiaca = getId("heart_disease_s").checked
     
+    work_type = [0,0,0,0];
+    work_types =  [ ["work_type_1",0],["work_type_2",1],["work_type_3",2],["work_type_4",3]];
+    for (i = 0; i < work_types.length; i ++)
+      work_type[work_types[i][1]] = getId(work_types[i][0]).checked
+      
+    regiao_urbana = !getId("regiao_radio_s").checked
+    glucose = (getId("Trackbar").value - 55) / (300 - 55)
 
-    max_hr = 220 - age;
-    chesPain_type = 4;
-    if ( dor_peito){
-      chesPain_type = 3;
-      qtd = dor_duracao + dor_stree + !dor_alivia;
-      switch(qtd){
-        case 1: chesPain_type = 3;
-                break;
-        case 2: chesPain_type = 2;
-                break;
-        case 3: chesPain_type = 1;
-                break;
-      }
-    }
-
-    chesPain_type = chesPain_type / 10;
-    max_hr = (max_hr - 60) / (202 - 60);
-    old_peak = (old_peak+2.6) /(6.2+2.6);
-    dor_slope = dor_slope / 10;
-    if (dor_exercise)
-      dor_exercise = 1;
-    else
-      dor_exercise = 0;
-    test_tensor = tf.tensor2d([[ dor_exercise , chesPain_type, max_hr,old_peak,dor_slope  ]]);
-    resultado = model_heart.predict(test_tensor);
-    
-    console.log(
-      dor_exercise , chesPain_type, max_hr,old_peak,dor_slope
-    )
-    console.log(
-    model_heart.predict(test_tensor).print()
-    );
-    
-   alert( resultado.dataSync()[0] )
  
+    //gender	age	hypertension	heart_disease	ever_married	Residence_type	avg_glucose_level	bmi	stroke	work_type_Private	work_type_Self-employed	work_type_Govt_job	work_type_Never_worked
+    test_tensor = tf.tensor2d([[  
+      woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3]
+    ]]);
+
+    resultado = model_heart.predict(test_tensor);
+    console.log([woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3]])
+
+    console.log(model_heart.predict(test_tensor).print());
+    alert( resultado.dataSync()[0] )
   }
 
 </script>
