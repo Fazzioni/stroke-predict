@@ -20,7 +20,6 @@
         model_heart = await tf.loadLayersModel('/model/model.json');
  
         // habilitar o botao, apos carregar
-        //test_tensor = tf.tensor2d([[1,0.3,0.4,0.3,0.1]]);
 
         test_tensor = tf.tensor2d([[1,0.49,0,0,0,0,0.474408,0.344, 1, 0, 0,0]]);
 
@@ -28,17 +27,7 @@
     }
     Start()
 
-    
-    function ChangePainVisibility(b = true){
-      el = document.getElementById("div_pain");
-      for (i = 0; i < el.children.length; i ++)
-        if (el.children[i].tagName == 'INPUT'){
-          el.children[i].disabled = !b;
-          el.children[i].checked = false;
-        }
-    }
 
-    
 
   </script>
 
@@ -116,22 +105,16 @@
                 
                 <!-- residencia -->
                 <h2>Em que região você mora?</h2>
-                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_s" value="Urbana"  ">
+                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_s" value="Urbana"  >
                 <label for="regiao_radio_s">Urbana</label>
-                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_n" value="Rural"  ">
+                <input class="green" type="radio" name="regiao_radio" id="regiao_radio_n" value="Rural"  >
                 <label  for="regiao_radio_n" >Rural</label>
               
               
+
                 só diabetes, docinho
                 <br><br><br>
-                <label id="trackbar_value" class="label_tracker">.</label>
-                 
-                <div class="trackbarcontainer">
-                  <input type="range" min="55" max="300" value="10" class="trackbar" id="Trackbar">
-                </div>
- 
-                <br><br><br>
-                
+
                 <button onclick="predition()"> Sim, eu tenho coragem!</button>
 
           </div>
@@ -145,55 +128,6 @@
     <h1>Teste</h1>
   </footer>
   -->
-<script>
-  var slider = document.getElementById("Trackbar");
-     
-      slider.oninput = function() {
-      info = 'sem risco';
-
-      v = this.value;
-      c = 'hsl(112, 100%, 50%';
-      if (v < 15){ // sem risco
-          c = 'hsl(112, 100%, 50%';
-          this.style.background = "rgb(166, 233, 171)";
-          info = 'sem risco';
-
-      }else if (v < 20){ // baixo risco
-          c = 'hsl(39, 100%, 50%';
-          this.style.background = "rgb(205, 233, 131)";
-          info = 'Baixo risco';
-          
-      }else if (v < 25){ // medio risco
-          c = 'hsl(22, 100%, 50%';
-          this.style.background = "rgb(247, 148, 68)";
-          info = 'Médio risco';
-          
-
-      }else if (v < 42){ // alto risco
-          c = 'hsl(0, 100%, 50%';
-          this.style.background = "rgb(252, 119, 93)";
-          info = 'Alto risco';
-
-      }else{  
-          c = 'hsl(39, 100%, 50%';
-          this.style.background = "rgb(205, 233, 131)";
-          info = '';
-          
-      }
-      document.getElementById("trackbar_value").innerText = (this.value/10) +" - "+info;
- 
-      
-      // if (this.value > 50) this.style.background = "red";
-        /*
-                  Baixo risco = Menores que 2
-	                Médio risco = Entre 2 e 2.55
-	                Alto risco = Acima de 2.55
-        */        
-
-        this.style.setProperty('--trackbarColor', c)    
-    }
-
-</script>
 
 <script>
   // script para realizar a predição
@@ -217,17 +151,19 @@
       work_type[work_types[i][1]] = getId(work_types[i][0]).checked
       
     regiao_urbana = !getId("regiao_radio_s").checked
-    glucose = (getId("Trackbar").value - 55) / (300 - 55)
-
- 
+    //glucose = (getId("Trackbar").value - 55) / (300 - 55)
+    glucose = (104.48275 - 55) / (300 - 55) // vamos usar a média
+    
     //gender	age	hypertension	heart_disease	ever_married	Residence_type	avg_glucose_level	bmi	stroke	work_type_Private	work_type_Self-employed	work_type_Govt_job	work_type_Never_worked
     test_tensor = tf.tensor2d([[  
-      woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3]
+      woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
     ]]);
 
     resultado = model_heart.predict(test_tensor);
-    console.log([woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3]])
-
+    console.log("Genero: "+woman+"\n   Age:"+age+"\nHipertensao:"+hipertensao+"\ndoença cardiaca:    "+doenca_cardiaca+"\ncasado:    "+casado +"\n regiao urbana:    "+regiao_urbana+"\n glicose:   "+glucose+"\n imc:   "+imc+"\n  wt0:  "+work_type[0]+"   "+work_type[1]+"   "+work_type[2]+"   "+work_type[3]
+    
+    )
+    
     console.log(model_heart.predict(test_tensor).print());
     alert( resultado.dataSync()[0] )
   }
