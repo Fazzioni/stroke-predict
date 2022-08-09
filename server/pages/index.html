@@ -7,9 +7,13 @@
   <title> </title>
   <link rel="stylesheet" href="teste.css">
   <link rel="stylesheet" href="fundo.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+            
+
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
   <script>
     let model_heart;
@@ -32,17 +36,20 @@
   </script>
 
     <header>
-    
-      <h1>Predição</h1>
-      <h1>Informações</h1>
-      <h1>Sobre</h1>
+      <a class="contact-btn">Predição</a> 
+      <div class="contact-btn">Informações</div>
+      <div class="contact-btn">Sobre</div>
+      
+ 
 
    </header>
-    <!-- coração no canto esquerdo -->
-    <div class="box"> <div class="heart">   </div> </div>
+   <img src="/brain2.png" class="brain">
+
+ 
 
          <!-- animação atrás  -->
-        <div class="bloods" ></div>
+        <!-- <div class="bloods" >
+        </div> -->
 
           <!-- Formulário de predição-->
           <div class="form">
@@ -86,7 +93,7 @@
 
                 <!-- Casamento -->
                 <h2>já foi casado?</h2>
-                <input class="red" type="radio" name="casado" id="casado_s" value="s"  >
+                <input class="green" type="radio" name="casado" id="casado_s" value="s"  >
                 <label for="casado_s">Sim</label>
 
                 <input class="green" type="radio" name="casado" id="casado_n" value="n"  >
@@ -109,25 +116,124 @@
                 <label for="regiao_radio_s">Urbana</label>
                 <input class="green" type="radio" name="regiao_radio" id="regiao_radio_n" value="Rural"  >
                 <label  for="regiao_radio_n" >Rural</label>
-              
-              
-
-                só diabetes, docinho
                 <br><br><br>
 
+                
                 <button onclick="predition()"> Sim, eu tenho coragem!</button>
 
+                <br>
+                <canvas id="predict_avc" width="600" height="300"></canvas>
+
+
           </div>
+        <br><br>
+          <footer  >
+  
+            <h1>Teste</h1>
+            
+            <div class="profile-card">
+              <div class="card-header">
+                <div class="pic">
+                  <img src="https://avatars.githubusercontent.com/u/79149971" alt="">
+                </div>
+                <div class="name">Daniel Fazzioni</div>
+                <!-- <div class="desc">Developer & Designer</div> -->
+                <div class="sm">
+                  <!-- <a href="#" class="fab fa-discord"></a> -->
+                  <a href="https://github.com/Fazzioni" class="fab fa-github"></a>
+                  <a href="https://www.linkedin.com/in/daniel-fazzioni-831574236/" class="fab fa-linkedin"></a>
+                </div>
+
+                <!-- <a href="#" class="contact-btn">Contact Me</a> -->
+              </div>
+            </div>
 
 
-          
+            <div class="profile-card">
+              <div class="card-header">
+                <div class="pic">
+                  <img src="https://avatars.githubusercontent.com/u/106565223">
+                </div>
+                <div class="name"> Artur Matos</div>
 
-  <br>
-  <!--
-  <footer>
-    <h1>Teste</h1>
-  </footer>
-  -->
+                <div class="sm">
+                  <a href="https://github.com/arturnovais" class="fab fa-github"></a>
+                  <a href="https://www.linkedin.com/in/artur-matos-169037234/" class="fab fa-linkedin"></a>
+                </div>
+ 
+              </div>
+            </div>
+
+              <div class="profile-card">
+                <div class="card-header">
+                  <div class="pic">
+                    <img src="https://avatars.githubusercontent.com/u/110793317">
+                  </div>
+                  <div class="name"> Pedro Mundel </div>  
+                  <div class="sm">
+                    <a href="https://github.com/PedroMundel" class="fab fa-github"></a>
+                    <a href="https://www.linkedin.com/in/pedro-mundel-8aba61218" class="fab fa-linkedin"></a>
+                  </div>
+   
+                </div>
+              </div>
+                
+
+              
+            
+            <div style="background-color: rgb(20, 18, 18); width:100%;">
+              <h1>ok</h1>
+            </div>
+
+
+          </footer >      
+       
+<!-- -->
+      
+
+ <script>
+  function Desenha(labels,dados){
+    //   return data = {
+    //   labels:labels,
+    //   datasets: [{
+    //     label: "My First dataset",
+    //     fillColor: "rgba(220,220,220,0.2)",
+    //     strokeColor: "rgba(220,220,220,1)",
+    //     pointColor: "rgba(220,220,220,1)",
+    //     pointStrokeColor: "#fff",
+    //     pointHighlightFill: "#fff",
+    //     pointHighlightStroke: "rgba(220,220,220,1)",
+    //     data: dados
+    //   }, {
+    //     label: "My Second dataset",
+    //     fillColor: "rgba(151,187,205,0.2)",
+    //     strokeColor: "rgba(151,187,205,1)",
+    //     pointColor: "rgba(151,187,205,1)",
+    //     pointStrokeColor: "#fff",
+    //     pointHighlightFill: "#fff",
+    //     pointHighlightStroke: "rgba(151,187,205,1)",
+    //     data: [28, 48, 40, 19, 86, 27, 90]
+    //   }]
+    // };
+        new Chart("predict_avc", {
+        type: "line",
+        data: {
+          datasets: [{
+            pointRadius: 4,
+            pointBackgroundColor: "rgba(0,0,255,1)",
+            data: xyValues
+          }]
+        },
+        options:{...}
+      });
+
+
+  }
+
+
+
+
+ </script>
 
 <script>
   // script para realizar a predição
@@ -136,7 +242,7 @@
   function predition(){
     age = getId('age').value / 100;
     woman =  getId("radio_geneo_w").checked;
-    casado = !getId("casado_s").checked;
+    casado = getId("casado_s").checked;
 
     altura = getId('altura').value;
     peso = getId('peso').value;
@@ -155,15 +261,50 @@
     glucose = (104.48275 - 55) / (300 - 55) // vamos usar a média
     
     //gender	age	hypertension	heart_disease	ever_married	Residence_type	avg_glucose_level	bmi	stroke	work_type_Private	work_type_Self-employed	work_type_Govt_job	work_type_Never_worked
-    test_tensor = tf.tensor2d([[  
-      woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
-    ]]);
+    
+    resultados = []
+    valores = []
+    labels =[]
+    for (i = 18; i < 90; i++){
+      valores.push(  [ woman, i/100, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0 ]);
+    labels.push(i);  
+    }
+    
+    test_tensor = tf.tensor2d(valores); 
+    resultados =  model_heart.predict(test_tensor).dataSync();  
+    
 
+    // test_tensor = tf.tensor2d(valores);
+    // console.log(test_tensor);
+    // console.log(model_heart.predict(test_tensor).print());
+
+    //resultado = model_heart.predict(test_tensor);
+    //console.log("Genero: "+woman+"\n   Age:"+age+"\nHipertensao:"+hipertensao+"\ndoença cardiaca:    "+doenca_cardiaca+"\ncasado:    "+casado +"\n regiao urbana:    "+regiao_urbana+"\n glicose:   "+glucose+"\n imc:   "+imc+"\n  wt0:  "+work_type[0]+"   "+work_type[1]+"   "+work_type[2]+"   "+work_type[3])
+    
+    console.log(resultados);
+
+    var ctx = getId("predict_avc").getContext("2d");
+    var myNewChart = new Chart(ctx, {
+    type: 'line',
+                        
+    data: {
+        labels: labels,
+                    
+        datasets: [
+            {
+                label: 'Probabilidade de ter um AVC em função da idade',
+                data: resultados
+            }
+        ]
+    }
+  });
+
+
+
+    test_tensor = tf.tensor2d([[  
+        woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
+      ]]);
     resultado = model_heart.predict(test_tensor);
-    console.log("Genero: "+woman+"\n   Age:"+age+"\nHipertensao:"+hipertensao+"\ndoença cardiaca:    "+doenca_cardiaca+"\ncasado:    "+casado +"\n regiao urbana:    "+regiao_urbana+"\n glicose:   "+glucose+"\n imc:   "+imc+"\n  wt0:  "+work_type[0]+"   "+work_type[1]+"   "+work_type[2]+"   "+work_type[3]
-    
-    )
-    
     console.log(model_heart.predict(test_tensor).print());
     alert( resultado.dataSync()[0] )
   }
