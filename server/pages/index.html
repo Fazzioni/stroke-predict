@@ -64,8 +64,8 @@
 
 
                 <!-- age -->
-                <h2>Quantos anos, xuxu?</h2>
-                <input type="number" name="age" min="18" id="age"> 
+                <!-- <h2>Quantos anos, </h2>
+                <input type="number" name="age" min="18" id="age">  -->
 
                 <!-- Qual sua altura? -->
                 <h2>Qual sua altura em metros?</h2>
@@ -76,7 +76,7 @@
                 <input type="number" name="peso" min="0.5" id="peso"> 
                 
                 <!-- Hipertensao? -->
-                <h2>Tem hipertensão?</h2>
+                <h2>Tem hipertensão? xuxu</h2>
                 <input class="red" type="radio" name="hipertenso" id="hipertenso_s" value="s"  >
                 <label for="hipertenso_s">Sim</label>
 
@@ -119,7 +119,7 @@
                 <br><br><br>
 
                 
-                <button onclick="predition()"> Sim, eu tenho coragem!</button>
+                <button class="contact-btn" onclick="predition()"> Sim, eu tenho coragem!</button>
 
                 <br>
                 <canvas id="predict_avc" width="600" height="300"></canvas>
@@ -191,56 +191,12 @@
 <!-- -->
       
 
- <script>
-  function Desenha(labels,dados){
-    //   return data = {
-    //   labels:labels,
-    //   datasets: [{
-    //     label: "My First dataset",
-    //     fillColor: "rgba(220,220,220,0.2)",
-    //     strokeColor: "rgba(220,220,220,1)",
-    //     pointColor: "rgba(220,220,220,1)",
-    //     pointStrokeColor: "#fff",
-    //     pointHighlightFill: "#fff",
-    //     pointHighlightStroke: "rgba(220,220,220,1)",
-    //     data: dados
-    //   }, {
-    //     label: "My Second dataset",
-    //     fillColor: "rgba(151,187,205,0.2)",
-    //     strokeColor: "rgba(151,187,205,1)",
-    //     pointColor: "rgba(151,187,205,1)",
-    //     pointStrokeColor: "#fff",
-    //     pointHighlightFill: "#fff",
-    //     pointHighlightStroke: "rgba(151,187,205,1)",
-    //     data: [28, 48, 40, 19, 86, 27, 90]
-    //   }]
-    // };
-        new Chart("predict_avc", {
-        type: "line",
-        data: {
-          datasets: [{
-            pointRadius: 4,
-            pointBackgroundColor: "rgba(0,0,255,1)",
-            data: xyValues
-          }]
-        },
-        options:{...}
-      });
-
-
-  }
-
-
-
-
- </script>
-
 <script>
   // script para realizar a predição
   function getId(id){ return document.getElementById(id)}
   
   function predition(){
-    age = getId('age').value / 100;
+    //age = getId('age').value / 100;
     woman =  getId("radio_geneo_w").checked;
     casado = getId("casado_s").checked;
 
@@ -269,7 +225,7 @@
       valores.push(  [ woman, i/100, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0 ]);
     labels.push(i);  
     }
-    
+
     test_tensor = tf.tensor2d(valores); 
     resultados =  model_heart.predict(test_tensor).dataSync();  
     
@@ -301,12 +257,12 @@
 
 
 
-    test_tensor = tf.tensor2d([[  
-        woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
-      ]]);
-    resultado = model_heart.predict(test_tensor);
-    console.log(model_heart.predict(test_tensor).print());
-    alert( resultado.dataSync()[0] )
+    // test_tensor = tf.tensor2d([[  
+    //     woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
+    //   ]]);
+    // resultado = model_heart.predict(test_tensor);
+    // console.log(model_heart.predict(test_tensor).print());
+    // alert( resultado.dataSync()[0] )
   }
 
 </script>
