@@ -64,8 +64,8 @@
 
 
                 <!-- age -->
-                <!-- <h2>Quantos anos, </h2>
-                <input type="number" name="age" min="18" id="age">  -->
+                <h2>Quantos anos xuxu?</h2>
+                <input type="number" name="age" min="18" id="age">  
 
                 <!-- Qual sua altura? -->
                 <h2>Qual sua altura em metros?</h2>
@@ -76,7 +76,7 @@
                 <input type="number" name="peso" min="0.5" id="peso"> 
                 
                 <!-- Hipertensao? -->
-                <h2>Tem hipertensão? xuxu</h2>
+                <h2>Tem hipertensão?</h2>
                 <input class="red" type="radio" name="hipertenso" id="hipertenso_s" value="s"  >
                 <label for="hipertenso_s">Sim</label>
 
@@ -196,7 +196,7 @@
   function getId(id){ return document.getElementById(id)}
   
   function predition(){
-    //age = getId('age').value / 100;
+    age = getId('age').value;
     woman =  getId("radio_geneo_w").checked;
     casado = getId("casado_s").checked;
 
@@ -218,12 +218,15 @@
     
     //gender	age	hypertension	heart_disease	ever_married	Residence_type	avg_glucose_level	bmi	stroke	work_type_Private	work_type_Self-employed	work_type_Govt_job	work_type_Never_worked
     
-    resultados = []
-    valores = []
-    labels =[]
-    for (i = 18; i < 90; i++){
-      valores.push(  [ woman, i/100, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0 ]);
-    labels.push(i);  
+    resultados = [];
+    valores = [];
+    labels =[];
+    maximo = parseInt(age+5);
+    for (i = -5; i <= 5; i++){
+      console.log("AGE: ",i);
+      valores.push(  [ woman, (age+i)/100, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0 ]);
+      labels.push((age+i));  
+
     }
 
     test_tensor = tf.tensor2d(valores); 
@@ -252,7 +255,19 @@
                 data: resultados
             }
         ]
+    },
+    options:{
+      scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 1,
+                        min: 0,
+                        // stepSize: 1
+                    }
+                } ]
+                  }
     }
+
   });
 
 
