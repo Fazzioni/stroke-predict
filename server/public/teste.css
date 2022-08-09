@@ -306,8 +306,10 @@ footer{
   /* bottom:0px; */
   border:100px;
   /* position:absolute;  */
-  height: 400px;
+  /* height: 400px; */
   /* transform: translateY(100%); */
+ 
+
 }
 
 
@@ -320,6 +322,8 @@ footer{
   border-radius: 8px;
   overflow: hidden;
   display: inline-block;
+  padding:  0px 0px 20px 0px;
+
 }
 
 .card-header{
@@ -397,7 +401,9 @@ footer{
   margin-top: 16px;
   transition: .3s linear;
   cursor:pointer;
-
+  font-size: 16pt;
+  align-self: start;
+  background-color: #f4f4f4;
 }
 
 .contact-btn:hover{
