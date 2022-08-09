@@ -13,7 +13,7 @@
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script> -->
 
   <script>
     let model_heart;
@@ -36,9 +36,10 @@
   </script>
 
     <header>
-      <a class="contact-btn">Predição</a> 
-      <div class="contact-btn">Informações</div>
-      <div class="contact-btn">Sobre</div>
+      <a href="#form" class="contact-btn">Predição</a> 
+      <a href="#footer" class="contact-btn">Sobre</a>
+      <a href="https://github.com/Fazzioni/stroke-predict" class="contact-btn">Código fonte</a>
+      
       
  
 
@@ -52,7 +53,7 @@
         </div> -->
 
           <!-- Formulário de predição-->
-          <div class="form">
+          <div class="form" id="form">
                 <h1>...</h1>
 
                 <!-- Genero -->
@@ -119,15 +120,17 @@
                 <br><br><br>
 
                 
-                <button class="contact-btn" onclick="predition()"> Sim, eu tenho coragem!</button>
+                <button class="contact-btn" onclick="predition()"> Prever!</button>
 
                 <br>
-                <canvas id="predict_avc" width="600" height="300"></canvas>
+                <!-- <canvas id="predict_avc" width="600" height="300"></canvas> -->
+                <br>
+                <div id="result" class="result"> </div>
 
 
           </div>
         <br><br>
-          <footer  >
+          <footer id="footer" >
   
             <h1>Teste</h1>
             
@@ -196,7 +199,7 @@
   function getId(id){ return document.getElementById(id)}
   
   function predition(){
-    age = getId('age').value;
+    age = getId('age').value / 100;
     woman =  getId("radio_geneo_w").checked;
     casado = getId("casado_s").checked;
 
@@ -218,21 +221,7 @@
     
     //gender	age	hypertension	heart_disease	ever_married	Residence_type	avg_glucose_level	bmi	stroke	work_type_Private	work_type_Self-employed	work_type_Govt_job	work_type_Never_worked
     
-    resultados = [];
-    valores = [];
-    labels =[];
-    maximo = parseInt(age+5);
-    for (i = -5; i <= 5; i++){
-      console.log("AGE: ",i);
-      valores.push(  [ woman, (age+i)/100, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0 ]);
-      labels.push((age+i));  
-
-    }
-
-    test_tensor = tf.tensor2d(valores); 
-    resultados =  model_heart.predict(test_tensor).dataSync();  
-    
-
+ 
     // test_tensor = tf.tensor2d(valores);
     // console.log(test_tensor);
     // console.log(model_heart.predict(test_tensor).print());
@@ -240,44 +229,17 @@
     //resultado = model_heart.predict(test_tensor);
     //console.log("Genero: "+woman+"\n   Age:"+age+"\nHipertensao:"+hipertensao+"\ndoença cardiaca:    "+doenca_cardiaca+"\ncasado:    "+casado +"\n regiao urbana:    "+regiao_urbana+"\n glicose:   "+glucose+"\n imc:   "+imc+"\n  wt0:  "+work_type[0]+"   "+work_type[1]+"   "+work_type[2]+"   "+work_type[3])
     
-    console.log(resultados);
+ 
+ 
 
-    var ctx = getId("predict_avc").getContext("2d");
-    var myNewChart = new Chart(ctx, {
-    type: 'line',
-                        
-    data: {
-        labels: labels,
-                    
-        datasets: [
-            {
-                label: 'Probabilidade de ter um AVC em função da idade',
-                data: resultados
-            }
-        ]
-    },
-    options:{
-      scales: {
-                yAxes: [{
-                    ticks: {
-                        max: 1,
-                        min: 0,
-                        // stepSize: 1
-                    }
-                } ]
-                  }
-    }
-
-  });
+    test_tensor = tf.tensor2d([[  
+        woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
+      ]]);
+    resultado = model_heart.predict(test_tensor);
+    //console.log(model_heart.predict(test_tensor).print());
+    getId("result").innerText =  (resultado.dataSync()[0] * 100).toFixed(2)+"%";
 
 
-
-    // test_tensor = tf.tensor2d([[  
-    //     woman, age, hipertensao, doenca_cardiaca, casado , regiao_urbana, glucose, imc, work_type[0],work_type[1],work_type[2],work_type[3], 0,0,0
-    //   ]]);
-    // resultado = model_heart.predict(test_tensor);
-    // console.log(model_heart.predict(test_tensor).print());
-    // alert( resultado.dataSync()[0] )
   }
 
 </script>
