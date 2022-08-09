@@ -451,5 +451,13 @@ footer{
 h2{
   color:rgb(255, 255, 255);
   font-size: 24pt;
-    
+
+}
+
+.result{
+  font-size:38pt;
+  padding: 20px;
+  font-style: italic;
+  color: #01ffff;
+  
 }
